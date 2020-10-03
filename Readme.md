@@ -12,8 +12,8 @@ A project to predict housing prices from trained machine learning model. I've us
 
 ## Screenshot of the Web App
 
-<img src="ss1.jpg" width="50%">
-<img src="ss2.jpg" width="50%">
+<img src="ss1.jpg" width="30%">
+<img src="ss2.jpg" width="30%">
 
 ## Getting Started
 
