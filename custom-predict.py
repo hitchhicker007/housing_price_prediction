@@ -19,20 +19,16 @@ print("""
 """)
 
 BHK = int(input("\n   Please enter BHK size : "))
-TYPE = int(input(" \n   Please enter proporty type : "))
-LOC = int(input("\n   Please enter proporty Location : "))
+TYPE = int(input(" \n   Please enter proporty type [1 to 3] : "))
+LOC = int(input("\n   Please enter proporty Location [1 to 3] : "))
 
 sample = [BHK,TYPE,LOC]
 sample = np.array(sample).reshape(1,-1)
 # print(sample.reshape(1,-1))
 
-# min_max_scaler = preprocessing.MinMaxScaler()
-# sample = min_max_scaler.fit_transform(sample)
 with open('best-model.pkl', 'rb') as file:  
     model = pickle.load(file)
 
 prediction = model.predict(sample)
 
 print("\n> price of the house is : " + str(prediction))
-    
-# main()

@@ -8,6 +8,7 @@ from sklearn.metrics import accuracy_score
 import os
 from pathlib import Path
 import shutil
+from sklearn.metrics import r2_score
 from sklearn import preprocessing
 
 print("\n ------------  loading data  ------------")
@@ -27,21 +28,21 @@ Y = dataset[:,4]
 
 print("\n ------------  training model  ------------")
 
-model = linear_model.LinearRegression()
+model = linear_model.Ridge(alpha=0.2)
 MSE = 0
 MSE_list = []
 print("\n ------------  Evaluating model  ------------")
-# min_max_scaler = preprocessing.MinMaxScaler()
-# X_scale = min_max_scaler.fit_transform(X)
+min_max_scaler = preprocessing.MinMaxScaler()
+X_scale = min_max_scaler.fit_transform(X)
 
 for i in range(0,100):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
 
     model.fit(X_train,Y_train)
     y_pred = model.predict(X_test)
-    MSE = accuracy_score(Y_test,y_pred)
+    MSE = r2_score(Y_test,y_pred)
     MSE_list.append(MSE)
-    print("\n"+str(i)+". MSE of model is : "+str(MSE))
+    print("\n"+str(i)+". R2 scrore of model is : "+str(MSE))
 
     filename = str(i)+'-model-bengluru-'+str(MSE)+'.pkl'
     with open('models/'+filename, 'wb') as file:  
@@ -56,7 +57,7 @@ path = Path('models/')
 for model in path.glob("*.pkl"):
     model_file_name = str(model).split("\\")[-1]
     if(str(MSE_list[0]) in model_file_name):
-        print("\n The best model is "+model_file_name+" With MSE "+str(MSE_list[0]))
+        print("\n The best model is "+model_file_name+" With R2 score "+str(MSE_list[-1]))
         shutil.move("models/"+model_file_name,"./")
         shutil.rmtree('models')
         os.rename(model_file_name,"best-model.pkl")
